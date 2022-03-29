@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './person-details.css';
 
-const PersonDetails = ({selectedItemId, swapi}) =>  {
+const PlanetDetails = ({selectedItemId, getData}) =>  {
     const [data, setData] = useState({})
 
     useEffect(() => {
-        swapi.getPerson(selectedItemId)
+        getData(selectedItemId)
             .then(data => {
             setData(data)})
             .catch(error => error)
     }, [selectedItemId])
 
-    const {id, name, gender, birthYear, eyeColor} = data
-    const imageUrl = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`
+    const {id, name, population, rotationPeriod, diameter} = data
+    const imageUrl = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
 
     return (
       <div className="person-details card">
@@ -22,16 +21,16 @@ const PersonDetails = ({selectedItemId, swapi}) =>  {
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
+              <span className="term">Population</span>
+              <span>{population}</span>
             </li>
             <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
+              <span className="term">Rotation Period</span>
+              <span>{rotationPeriod}</span>
             </li>
             <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
+              <span className="term">Diameter</span>
+              <span>{diameter}</span>
             </li>
           </ul>
         </div>
@@ -39,4 +38,4 @@ const PersonDetails = ({selectedItemId, swapi}) =>  {
     )
 }
 
-export default PersonDetails;
+export default PlanetDetails;

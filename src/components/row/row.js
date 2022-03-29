@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 
 const Row = ({left, right}) => {
     return (

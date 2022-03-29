@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './item-list.css';
 
-const ItemList = ({setSelectedItemId, getData}) =>{
+const PlanetList = ({setSelectedItemId, getData}) =>{
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -10,14 +9,14 @@ const ItemList = ({setSelectedItemId, getData}) =>{
         })
     }, [])
 
-const elements = data.map((person) => {
+const elements = data.map((planet) => {
     return (
       <li
-        key={person.id}
-        onClick={() => setSelectedItemId(person.id)}
+        key={planet.id}
+        onClick={() => setSelectedItemId(planet.id)}
         className="list-group-item"
       >
-          {person.name}
+          {planet.name}
       </li>
     );
   });
@@ -25,4 +24,4 @@ const elements = data.map((person) => {
   return <ul className="item-list list-group">{elements}</ul>;
 }
 
-export default ItemList;
+export default PlanetList;

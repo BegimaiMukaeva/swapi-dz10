@@ -1,3 +1,4 @@
-import pages from './people-page';
+import PeoplePage from './people-page';
+import PlanetPage from "./planet-page";
 
-export {pages};
+export {PeoplePage, PlanetPage};
