@@ -1,6 +1,7 @@
 import React from "react";
 import ItemList from "../item-list";
 import PlanetList from "../planet-list";
+import StarshipList from "../starship-list";
 import {withSwapi} from "../hoc";
 
 const PeopleList = withSwapi(
@@ -11,10 +12,10 @@ const PlanetsList = withSwapi(
     (props) => <PlanetList {...props} />,
     (swapi) => ({getData: swapi.getAllPlanets}),
     )
-const StarshipList = withSwapi(
-    (props) => <ItemList {...props} />,
+const StarshipsList = withSwapi(
+    (props) => <StarshipList {...props} />,
     (swapi) => ({getData: swapi.getAllStarships}),
     )
 
 
-export {PeopleList, PlanetsList, StarshipList};
+export {PeopleList, PlanetsList, StarshipsList};

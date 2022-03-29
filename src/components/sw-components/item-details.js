@@ -1,6 +1,7 @@
 import React from "react";
 import ItemDetails from "../item-details";
 import PlanetDetails from "../planet-details";
+import StarshipDetails from "../starship-details";
 import {withSwapi} from "../hoc"
 
 const PersonDetails = withSwapi(
@@ -11,9 +12,9 @@ const PlanetsDetails = withSwapi(
     (props) => <PlanetDetails {...props}  />,
     (swapi) => ({getData: swapi.getPlanet})
     )
-const StarshipDetails = withSwapi(
-    (props) => <ItemDetails {...props}  />,
+const StarshipsDetails = withSwapi(
+    (props) => <StarshipDetails {...props}  />,
     (swapi) => ({getData: swapi.getStarship})
     )
 
-export {PersonDetails, PlanetsDetails, StarshipDetails};
+export {PersonDetails, PlanetsDetails, StarshipsDetails};
