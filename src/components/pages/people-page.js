@@ -3,8 +3,10 @@ import React, {useState} from "react" ;
 import {PeopleList,PersonDetails,} from "../sw-components";
 import Row from "../row";
 
-const PeoplePage = () => {
-    const [selectedItemId, setSelectedItemId] = useState(1)
+const PeoplePage = ({selectedItemId, history}) => {
+    const setSelectedItemId = (id) => {
+    history.push(id);
+  };
 
     const leftElement =<PeopleList setSelectedItemId={setSelectedItemId} />
 

@@ -3,8 +3,10 @@ import React, {useState} from "react" ;
 import {PlanetsList, PlanetsDetails} from "../sw-components";
 import Row from "../row";
 
-const PlanetPage = () => {
-    const [selectedItemId, setSelectedItemId] = useState(1)
+const PlanetPage = ({selectedItemId, history}) => {
+    const setSelectedItemId = (id) => {
+    history.push(id);
+  };
 
     const leftElement =<PlanetsList setSelectedItemId={setSelectedItemId} />
 
