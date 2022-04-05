@@ -1,33 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import SwapiService from '../../services/swapi-service';
-import './random-planet.css';
-
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../swapi-context";
+import Preloader from "../../components/loader/index";
+import "./random-planet.css";
 
 const RandomPlanet = () => {
-  const [state, setState] = useState({});
-  const {id, name, population, rotationPeriod, diameter} = state;
-  const imgUrl = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
-
-  const swapi = new SwapiService();
+  const [data, setData] = useState({
+    loading: true,
+    error: false,
+  });
+  const swapi = useContext(Context);
 
   useEffect(() => {
     const updatePlanet = () => {
-      const randomPlanetId = Math.floor(Math.random() * (20 - 2) + 2);
-      swapi.getPlanet(randomPlanetId).then(data => {
-        setState(data)
-      })
-    }
-    updatePlanet()
-    const meka = setInterval(() => {
-      updatePlanet()
-    }, 3000)
+      const id = Math.floor(Math.random() * (20 - 1) + 1);
+      swapi
+        .getPlanet(id)
+        .then((planet) => {
+          setData({ ...data, ...planet, loading: false, error: false });
+        })
+        .catch((error) => {
+          setData({ ...data, loading: false, error: true });
+        });
+    };
 
-    return () => clearInterval(meka)
-  }, [])
+    updatePlanet();
+    const planetInterval = setInterval(() => {
+      updatePlanet();
+    }, 2500);
+
+    return () => clearInterval(planetInterval);
+  }, []);
+
+  const { id, name, population, rotationPeriod, diameter } = data;
+  const imageUrl = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+
+  if (data.loading) {
+    return <Preloader />;
+  }
 
   return (
     <div className="random-planet jumbotron rounded">
-      <img className="planet-image" src={imgUrl} />
+      <img className="planet-image" src={imageUrl} />
       <div>
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
@@ -46,7 +59,7 @@ const RandomPlanet = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default RandomPlanet;

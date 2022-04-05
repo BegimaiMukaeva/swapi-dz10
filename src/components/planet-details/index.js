@@ -1,1 +1,1 @@
-export {default} from './planet-details'
+export { PlanetDetails, Record } from "./planet-details";

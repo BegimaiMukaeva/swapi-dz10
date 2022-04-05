@@ -1,3 +1,1 @@
-import withSwapi from './withSwapi';
-
-export {withSwapi};
+export { default } from "./withSwapi";

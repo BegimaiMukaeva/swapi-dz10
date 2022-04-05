@@ -1,41 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import "./planet-details.css";
 
-const PlanetDetails = ({selectedItemId, getData}) =>  {
-    const [data, setData] = useState({})
+const Record = ({ label, fieldName, data }) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{data[fieldName]}</span>
+    </li>
+  );
+};
 
-    useEffect(() => {
-        getData(selectedItemId)
-            .then(data => {
-            setData(data)})
-            .catch(error => error)
-    }, [selectedItemId])
+const PlanetDetails = ({ selectedItemId, getData, getImage, children }) => {
+  const [data, setData] = useState({});
 
-    const {id, name, population, rotationPeriod, diameter} = data
-    const imageUrl = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
+  useEffect(() => {
+    getData(selectedItemId)
+      .then((data) => setData(data))
+      .catch((error) => error);
+  }, [selectedItemId]);
 
-    return (
-      <div className="person-details card">
-        <img className="person-image"
-          src={imageUrl} />
-        <div className="card-body">
-          <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Population</span>
-              <span>{population}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Rotation Period</span>
-              <span>{rotationPeriod}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Diameter</span>
-              <span>{diameter}</span>
-            </li>
-          </ul>
-        </div>
+  const { id, name } = data;
+  const imageUrl = getImage(id);
+
+  return (
+    <div className="person-details card">
+      <img className="person-image" src={imageUrl} />
+      <div className="card-body">
+        <h4>{name}</h4>
+        <ul className="list-group list-group-flush">
+          {React.Children.map(children, (record) => {
+            return React.cloneElement(record, { data: data });
+          })}
+        </ul>
       </div>
-    )
-}
+    </div>
+  );
+};
 
-export default PlanetDetails;
+export { PlanetDetails, Record };

@@ -1,1 +1,3 @@
-export { default } from './planet-list'
+import PlanetList from "./planet-list";
+
+export default PlanetList;

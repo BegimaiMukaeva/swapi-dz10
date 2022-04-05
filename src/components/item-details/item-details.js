@@ -1,42 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import './item-details.css';
+import React, { useState, useEffect } from "react";
+import "./item-details.css";
 
-const ItemDetails = ({selectedItemId, getData}) =>  {
-    const [data, setData] = useState({})
+const Record = ({ label, fieldName, data }) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{data[fieldName]}</span>
+    </li>
+  );
+};
 
-    useEffect(() => {
-        getData(selectedItemId)
-            .then(data => {
-            setData(data)})
-            .catch(error => error)
-    }, [selectedItemId])
+function ItemDetails({ selectedItemId, getData, getImage, children }) {
+  const [data, setData] = useState({});
 
-    const {id, name, gender, birthYear, eyeColor} = data
-    const imageUrl = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`
+  useEffect(() => {
+    getData(selectedItemId)
+      .then((data) => setData(data))
+      .catch((error) => error);
+  }, [selectedItemId]);
 
-    return (
-      <div className="person-details card">
-        <img className="person-image"
-          src={imageUrl} />
-        <div className="card-body">
-          <h4>{name}</h4>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
-            </li>
-          </ul>
-        </div>
+  const { id, name } = data;
+  const imageUrl = getImage(id);
+
+  return (
+    <div className="person-details card">
+      <img className="person-image" src={imageUrl} />
+      <div className="card-body">
+        <h4>{name}</h4>
+        <ul className="list-group list-group-flush">
+          {React.Children.map(children, (record) => {
+            return React.cloneElement(record, { data: data });
+          })}
+        </ul>
       </div>
-    )
+    </div>
+  );
 }
 
-export default ItemDetails;
+export { ItemDetails, Record };

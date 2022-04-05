@@ -1,16 +1,17 @@
-import {Consumer} from "../swapi-context";
+import React from "react";
+import { Context } from "../swapi-context";
 
-const withSwapi = (View, parserFunc) => {
-    return (props) => {
-        const component = (
-            <Consumer>
-                {(swapi) => {
-                    const methods = parserFunc(swapi)
-                    return <View {...methods} {...props}/>
-                }}
-            </Consumer>
-        )
-        return component;
-    }
-}
+const withSwapi = (Component, divideFunc) => {
+  return (props) => {
+    return (
+      <Context>
+        {(swapi) => {
+          const methods = divideFunc(swapi);
+          return <Component {...methods} {...props} />;
+        }}
+      </Context>
+    );
+  };
+};
+
 export default withSwapi;

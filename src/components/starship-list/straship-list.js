@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import withSwapi from "../hoc";
-import "./planet-list.css";
 
-const PlanetList = ({ setSelectedItemId, getData, children }) => {
+const StarshipList = ({ setSelectedItemId, getData, children }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -11,22 +10,23 @@ const PlanetList = ({ setSelectedItemId, getData, children }) => {
       .catch((error) => error);
   }, []);
 
-  const elements = data.map((planet) => {
+  const elements = data.map((starship) => {
     return (
       <li
-        key={planet.id}
+        key={starship.id}
         className="list-group-item"
-        onClick={() => setSelectedItemId(planet.id)}
+        onClick={() => setSelectedItemId(starship.id)}
       >
-        {children(planet)}
+        {children(starship)}
       </li>
     );
   });
 
   return <ul className="item-list list-group">{elements}</ul>;
 };
+
 const divideFunc = (swapi) => ({
-  getData: swapi.getAllPlanets,
+  getData: swapi.getAllStarships,
 });
 
-export default withSwapi(PlanetList, divideFunc);
+export default withSwapi(StarshipList, divideFunc);

@@ -1,28 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import './item-list.css';
+import React, { useState, useEffect } from "react";
+import withSwapi from "../hoc";
+import "./item-list.css";
 
-const ItemList = ({setSelectedItemId, getData}) =>{
-    const [data, setData] = useState([]);
+const ItemList = ({ setSelectedItemId, getData, children }) => {
+  const [data, setData] = useState([]);
 
-    useEffect(() => {
-        getData().then(data => {
-            setData(data)
-        })
-    }, [])
+  useEffect(() => {
+    getData()
+      .then((data) => setData(data))
+      .catch((error) => error);
+  }, []);
 
-const elements = data.map((person) => {
+  const elements = data.map((person) => {
     return (
       <li
         key={person.id}
-        onClick={() => setSelectedItemId(person.id)}
         className="list-group-item"
+        onClick={() => setSelectedItemId(person.id)}
       >
-          {person.name}
+        {children(person)}
       </li>
     );
   });
 
   return <ul className="item-list list-group">{elements}</ul>;
-}
+};
 
-export default ItemList;
+const divideFunc = (swapi) => ({
+  getData: swapi.getAllPeople,
+});
+
+export default withSwapi(ItemList, divideFunc);

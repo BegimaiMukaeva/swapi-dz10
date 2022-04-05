@@ -1,1 +1,3 @@
-export {default} from './starship-details'
+import { StarshipDetails, Record } from "./starship-details";
+
+export { StarshipDetails, Record };

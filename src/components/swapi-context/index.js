@@ -1,3 +1,3 @@
-import {Provider, Consumer} from './swapi-context';
+import { Context } from "./context";
 
-export {Provider, Consumer};
+export { Context };
